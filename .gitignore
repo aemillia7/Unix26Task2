@@ -1,0 +1,16 @@
+# BusyBox source/build files
+src/
+busybox
+busybox-*
+*.tar.bz2
+*.tar.gz
+*.zip
+
+# Logs/temp files
+*.log
+*.tmp
+*.out
+
+# Editor/system files
+*~
+.DS_Store
