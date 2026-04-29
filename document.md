@@ -4,7 +4,7 @@
 <p align="center">
 
 <p align="center">
- | <a href="#about">About</a> |
+  <a href="#about">About</a> |
   <a href="#task">Task and Requirements</a> |
   <a href="#implementation">Implementation Details</a> |
   <a href="#diary">Work Diary</a> |
