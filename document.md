@@ -31,10 +31,9 @@
 
 </p>
 
----
-
 <a id="about"></a>
 ## :large_blue_diamond: About
+---
 <p align="justify">
 
 miau miau miau
@@ -45,6 +44,7 @@ miau miau miau
 
 <a id="task"></a>
 ## :large_blue_diamond: Task and Requirements
+---
 <p align="justify">
 
 The objective of this task is to build and use BusyBox from source on a Debian virtual machine ("IT Unix 26 debian-13") without using any package managers.
@@ -77,6 +77,15 @@ Service requirements:
 ### 5. Documentation & Delivery
 - Document the implementation and challenges in `document.md`
 - Submit a Git repository containing all scripts and documentation
+
+</p>
+
+<a id="implementation"></a>
+## :large_blue_diamond: Implementation
+---
+<p align="justify">
+
+miau miau miau
 
 </p>
 
