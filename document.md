@@ -31,6 +31,8 @@
 
 </p>
 
+---
+
 <a id="about"></a>
 ## :large_blue_diamond: About
 <p align="justify">
@@ -38,6 +40,8 @@
 miau miau miau
 
 </p>
+
+---
 
 <a id="task"></a>
 ## :large_blue_diamond: Task and Requirements
