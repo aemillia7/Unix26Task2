@@ -7,7 +7,7 @@ busybox-*
 *.zip
 
 # Logs/temp files
-*.log
+#*.log
 *.tmp
 *.out
 
