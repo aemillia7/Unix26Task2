@@ -3,15 +3,14 @@
 </p>
 <p align="center">
 
-<p align="center">
-  | <a href="#about">About</a> |
-  <a href="#task">Task and Requirements</a> |
-  <a href="#implementation">Implementation Details</a> |
-  <a href="#diary">Work Diary</a> |
-  <a href="#setup">Setup & Run</a> |
-  <a href="#challenges">Challenges</a> |
-
-</p>
+<div align="center">
+  <a href="#large_blue_diamond-about">About</a> |
+  <a href="#large_blue_diamond-task-and-requirements">Task and Requirements</a> |
+  <a href="#large_blue_diamond-implementation-details">Implementation Details</a> |
+  <a href="#large_blue_diamond-work-diary">Work Diary</a> |
+  <a href="#large_blue_diamond-setup--run">Setup & Run</a> |
+  <a href="#large_blue_diamond-challenges">Challenges</a>
+</div>
 
 <p align="center">
 
