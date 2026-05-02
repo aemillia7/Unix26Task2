@@ -61,11 +61,16 @@ make distclean || true
 make defconfig
 
 
+#reiskia kad bb sukompiliuotas kaip vienas failas be isoriniu biblioteku
 sed -i 's/# CONFIG_STATIC is not set/CONFIG_STATIC=y/' .config
+#isjungia traffic control, reikalingas kad isvengtum possible kompiliavimo problemas
 sed -i 's/^CONFIG_TC=y/# CONFIG_TC is not set/' .config
+## Parodo konfig. eilutes kad patikrinti ar pakeitimai pritaikyti
 grep -E '^(CONFIG_STATIC=y|# CONFIG_TC is not set)' .config
+# papildomai patikrina ar ijungtas config static
 grep '^CONFIG_STATIC=y' .config
 
+#kompiliuoja bb
 make -j"$(nproc)"
 cp busybox "$ROOT/busybox"
 chmod +x "$ROOT/busybox"
