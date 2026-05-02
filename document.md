@@ -8,6 +8,7 @@
   <a href="#large_blue_diamond-task-and-requirements">Task and Requirements</a> |
   <a href="#large_blue_diamond-implementation-details">Implementation Details</a> |
   <a href="#large_blue_diamond-work-diary">Work Diary and Challenges</a> |
+  <a href="#large_blue_diamond-conclusion">Conclusion and Lessons Learned</a> |
   <a href="#large_blue_diamond-setup--run">Setup & Run</a> |
 </div>
 
@@ -59,7 +60,7 @@ miau miau miau
 </p>
 
 <a id="implementation"></a>
-## :large_blue_diamond: Implementation
+## :large_blue_diamond: Implementation Details
 ---
 <p align="justify">
 
@@ -123,13 +124,16 @@ So when the user types `bb-ls` in the terminal, in reality the BusyBox `ls` comm
 
 Finally, inside the loop I added `chmod +x`, so that each created file becomes executable. After this step, commands like `bb-echo miau`, `bb-ls`, and others were already working correctly.
 
+While working on this task, I also had a few questions (to which I later got answers):
+- Regarding sudo permissions, at the end of my work I plan to create a fresh VM to test whether my scripts work properly. For that, sudo access will be required. However, the teaching assistant said that there should be no issues and sudo permissions will be available.
+
 **Challenges:**
 
 One challenge was understanding how to correctly loop through the BusyBox command list. At first, I tried to use a `for` loop, but it did not work correctly because of how Bash splits input. The correct solution was to use `while read -r`, which reads the commands line by line.
 
 Another challenge was understanding how the wrapper scripts work, especially the part with `$@`. It was not immediately clear why it needs to be escaped as `\$@`, but later I understood that this is required so that the arguments are passed correctly when the wrapper script is executed, not during its creation.
 
-P.S. Overall, not bad, only 1.6 hours and one red bull (_Watermelon_ taste is not bad but _Iced gummy bears_ is the best one) the script is finished! 🥳
+P.S. Overall, not bad, only 1.6 hours of work and one red bull (_Watermelon_ taste is not bad but _Iced gummy bears_ is the best one), and the script is finished! 🥳
 
 ### DAY 3:
 
