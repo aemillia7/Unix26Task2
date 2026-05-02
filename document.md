@@ -47,36 +47,17 @@ miau miau miau
 ---
 <p align="justify">
 
-The objective of this task is to build and use BusyBox from source on a Debian virtual machine ("IT Unix 26 debian-13") without using any package managers.
-
-The following requirements must be completed:
-
-### 1. BusyBox Compilation
-- Download BusyBox source code manually
-- Compile a statically linked BusyBox binary for x86_64 architecture
-- Store all source files in `/opt/task2/src`
-
-### 2. Script Development
-- Create `/opt/task2/compile.sh` to compile BusyBox
-- Create `/opt/task2/deploy.sh` to deploy BusyBox commands as `/bin/bb-<command>`
-- Create `/opt/task2/test.sh` to test all deployed commands and print their exit codes
-
-### 3. BusyBox Usage
-- Configure a systemd service `bb-httpd` using BusyBox `httpd`
-- Serve content from `/var/www/html/index.html`
-- The page must display: `I am alive <MIF-username>`
-- Store httpd configuration in `/etc/bb-httpd.conf`
-
-Service requirements:
-- Must start automatically on system boot
-- Must restart if stopped or killed
-
-### 4. HTTP Testing
-- Create `/opt/task2/httptest.sh` to display served HTTP content in terminal
-
-### 5. Documentation & Delivery
-- Document the implementation and challenges in `document.md`
-- Submit a Git repository containing all scripts and documentation
+1. Use your virtual machine that is using the template **"IT Unix 26 debian-13"**
+2. Your task is to write an installation, compilation, and test scripts in **bash** for **BusyBox**. Learn to download source code, compile software on your machine and related libraries in _/opt/task2/src_.  It is also important to download, compile and install in _/opt/task2/src_ all components of BusyBox on your Debian virtual machine without using any package managers for the installations.
+    1. Write a compilation script _/opt/task2/compile.sh_ that compiles a **statically linked** BusyBox binary for x86_64 architecture.
+    2. Write a script _/opt/task2/deploy.sh_ that deploys all BusyBox call commands to /bin/bb-<command>. For example, _ls_ from BusyBox is linked to _/bin/bb-ls_. (Can be shell scripts).
+    3. Write a script _/opt/task2/test.sh_ that tests all BusyBox linked binaries with case examples. Additionally, list all commands and their exit codes after executing them.
+3. Your task is to use BusyBox correctly.
+    1. Write a systemd service named _bb-httpd_ that uses httpd daemon from BusyBox to handle HTTP requests on port 80. It should serve _/var/www/html/index.html_ with a string _"I am alive <MIF-username>"_. The config file of _httpd_ should be in _/etc/bb-httpd.conf._
+    2. The systemd service file should be in the standard systemd directory. Service must be enabled - start automatically after each reboot. It should also restart the service if it's killed or stopped.
+    3. Write a script _/opt/task2/httptest.sh_ to print to the terminal HTTP served content.
+4. Document your actions/challenges in a .md (markdown syntax - same as used on mif git) file in the git repository, which would be shared with course professors.
+5. Share the Result for validation is of GIT repo with script, _document.md_ VM with and git repo with an installation script.
 
 </p>
 
