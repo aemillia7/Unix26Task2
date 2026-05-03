@@ -158,12 +158,12 @@ While working on this task, I also had a few questions (to which I later got ans
 - Is it acceptable to test commands using `--help` instead of executing them normally?
 
 **Challenges:**
-  1. Managing large command output. Some BusyBox commands produce very large output, which made the terminal output hard to read. This was solved by redirecting output to /dev/null.
+  1. Managing large command output. Some BusyBox commands produce very large output, which made the terminal output hard to read. This was solved by redirecting output to `/dev/null`.
   2. Commands waiting for input. Some commands (like `bb-cat`, etc.) were waiting for user input, which caused the script to freeze. This was solved by using timeout and redirecting input from `/dev/null`.
   3. Dangerous commands affecting the system. Commands like `killall5` can affect the system and even terminate the current session. This caused the connection to be closed before all commands were tested.
   4. Choosing the correct testing approach. It was not clear whether commands should be tested directly (which can be dangerous), skipped (which is incomplete), or tested using `--help` (which is safe but may not fully validate functionality).
 
-P.S. Expectation: I thought it will take me 15 min to write this script. Reality: I am leaving this task for the next day since I have to clarify the requirements xd
+P.S. _Expectation:_ I thought it will take me 15 min to write this script. _Reality:_ I am leaving this task for the next day since I have to clarify the requirements xd
 
 ### DAY 4:
 
