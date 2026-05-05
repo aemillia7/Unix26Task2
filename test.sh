@@ -25,7 +25,7 @@ for cmd in /bin/bb-*; do
 	name="$(basename "$cmd")"
 
 	case "$name" in
-		bb-acpid|bb-arping|bb-killall5|bb-reboot|bb-poweroff|bb-halt|bb-shutdown|bb-init|bb-mount|bb-umount|bb-fdisk|bb-fsck*|bb-mkfs*|bb-adduser|bb-deluser|bb-passwd|bb-ifconfig|bb-ip|bb-modprobe|bb-insmod|bb-rmmod)
+		bb-acpid|bb-add-shell|bb-addgroup|bb-adjtimex|bb-arping|bb-beep|bb-blkdiscard|bb-blkid|bb-blockdev|bb-bootchartd|bb-killall5|bb-reboot|bb-poweroff|bb-halt|bb-shutdown|bb-init|bb-mount|bb-umount|bb-fdisk|bb-fsck*|bb-mkfs*|bb-adduser|bb-deluser|bb-passwd|bb-ifconfig|bb-ip|bb-modprobe|bb-insmod|bb-rmmod)
 			check "$name --help" 0 "$cmd --help"
 			;;
 		bb-\[)
@@ -34,15 +34,6 @@ for cmd in /bin/bb-*; do
 		bb-\[\[)
 			check "$name" 0 'bb-[[ -f /etc/passwd ]]'
 			;;
-		bb-add-shell)
-
-			;;
-		bb-addgroup)
-
-			;;
-		bb-adjtimex)
-
-			;;
 		bb-arch)
 			check "$name" 0 'bb-arch'
 			;;
@@ -50,62 +41,38 @@ for cmd in /bin/bb-*; do
 			check "$name" 0 'bb-arp'
 			;;
 		bb-ascii)
-
+			check "$name" 0 "bb-ascii"
 			;;
 		bb-ash)
-			
+			check "$name" 0 "echo 'exit 0' | bb-ash"
 			;;
 		bb-awk)
-
+			check "$name" 0 "printf 'a b\n' | bb-awk '{print \$1}'"
 			;;
 		bb-base32)
-
+			check "$name" 0 "printf 'hello' | bb-base32"
 			;;
 		bb-base64)
-
+			check "$name" 0 "printf 'hello' | bb-base64"
 			;;
 		bb-basename)
-
+			check "$name" 0 "bb-basename /tmp/example.txt"
 			;;
 		bb-bc)
-
-			;;
-		bb-beep)
-
-			;;
-		bb-blkdiscard)
-
-			;;
-		bb-blkid)
-
-			;;
-		bb-blockdev)
-
-			;;
-		bb-bootchartd)
-
+			check "$name" 0 "echo '1+1' | bb-bc"
 			;;
 		bb-brctl)
-
+			check "$name" 0 "bb-brctl show"
 			;;
 		bb-bunzip2)
-
+			check "$name" 0 "printf 'hello\n' | bb-bzip2 | bb-bunzip2"
 			;;
 		bb-bzcat)
-
+			check "$name" 0 "printf 'hello\n' | bb-bzip2 | bb-bunzip2"
 			;;
 		bb-bzip2)
-
+			check "$name" 0 "printf 'hello\n' | bb-bzip2 | bb-bzcat"
 			;;
-
-
-
-
-
-
-
-
-
 		*)
 			echo "SKIP: $name"
 			SKIP=$((SKIP + 1))
