@@ -165,8 +165,38 @@ While working on this task, I also had a few questions (to which I later got ans
 
 P.S. _Expectation:_ I thought it will take me 15 min to write this script. _Reality:_ I am leaving this task for the next day since I have to clarify the requirements xd
 
-### DAY 4:
+### DAY 4-6:
 
+After I received answers to my questions, it became clear that using `timeout 2` was not allowed. I also understood that the task had to be divided into two parts. Commands that are safe and can be executed normally would get real functional test cases. Commands that are dangerous, can crash the system (for example `reboot` or `killall5`), or require sudo permissions would be placed into a separate loop and checked only with `--help`, because properly testing them would not really be possible. All commands had to return exit code `0`, except for the false command, because its normal exit code is `1`.
+
+BusyBox contains 402 commands in total, which is a large number. The first step was to separate dangerous commands from safe ones. Instead of checking every single command one by one and trying to understand which commands were safe and which were not, I decided to select around 50 commands and create proper functional tests for them. All remaining commands would only be checked using `--help`.
+
+At first, I wrote the script using a large `case` structure. However, after I started writing the test cases, the code became repetitive and required a lot of extra lines. Because of that, I decided to rewrite a large part of the script and create reusable helper functions such as `check`, `tested`, and `was_tested`. This made the script cleaner, easier to read and easier to expand later.
+
+After selecting the commands, I started writing the test cases. Overall, creating the tests was interesting, but it also took a lot of time to create valid and reliable test cases. Some tests are simple, but in many situations there was not really a better way to test the command. For example, commands like `bb-whoami` are difficult to test in a more advanced way without making the test unnecessarily complicated.
+
+At some point, I noticed that several commands in my functional test list were difficult to test reliably in my environment. For example, the `bb-du` test case did not behave consistently, so I removed its functional test and moved it to the `--help` section instead.
+
+Some commands were also difficult to test because I did not fully remember how to use them correctly. Because of that, some tests failed not because the commands were broken, but because I used them incorrectly. By reading `--help` and manual page, I was able to create working test cases. This task also helped me practice using manuals and `--help` pages, which was useful.
+
+Another important thing I noticed was related to the shell options at the beginning of the script. At first, I used:
+
+`set -euo pipefail`
+
+However, with the `-e` option enabled, the script stopped immediately whenever any command returned a non-zero exit code. Since the purpose of the testing script is to continue running even if some tests fail, this behavior was not suitable. Because of that, I removed the `-e` option and kept:
+
+`set -uo pipefail`
+
+This allowed the script to continue executing all tests and show all failures at the end instead of stopping after the first failed command.
+
+**Challenges:**
+
+  1. Large number of commands (402 total). It was not realistic to fully test every command manually. I solved this by selecting around 50 safer and more useful commands for functional testing and checking all remaining commands only with `--help`.
+  2. Dangerous or system-critical commands. Commands such as `reboot`, `killall5`, `shutdown` and similar could break the virtual machine or require elevated permissions. I solved this by excluding them from functional tests and checking them only with `--help`.
+  3. Commands requiring interactive input. Some commands wait for user input, which makes automated testing difficult. I solved this by piping simple input into the commands or moving them into the `--help` section.
+  4. Invalid or unstable test cases. Some tests failed because the test itself was unreliable. In such cases, I either rewrote the test or moved the command to the `--help` validation section.
+  5. Using `set -e` in the script. With `set -e`, the script stopped after the first failed test, which prevented me from seeing all test results. I solved this by removing the `-e` option so the script could continue running all tests.
+  6. Learning unfamiliar commands. Some BusyBox commands were difficult to test because I was not fully familiar with their syntax or behavior. I solved this by reading the manual pages and using `--help` to better understand how the commands work. 
 
 </p>
 
