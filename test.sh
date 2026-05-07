@@ -11,6 +11,7 @@ FAIL=0
 SKIP=0
 
 TESTED=""
+FUNCTIONAL_PASS=0
 
 check() {
 	local test_name="$1"
@@ -23,6 +24,11 @@ check() {
 
 	if [[ "$actual" -eq "$expected" ]]; then
 		PASS=$((PASS + 1))
+
+		if [[ "$test_name" != *"--help"* ]]; then
+			FUNCTIONAL_PASS=$((FUNCTIONAL_PASS + 1))
+		fi
+
 		echo -e "${GREEN}PASS: $test_name --> expected $expected, got $actual${NC}"
 	else
 		FAIL=$((FAIL + 1))
@@ -82,106 +88,97 @@ tested "bb-bc"
 check "bb-bunzip2" 0 "printf 'hello\n' | bb-bzip2 | bb-bunzip2"
 tested "bb-bunzip2"
 
-check "bb-cal"
+check "bb-cal" 0 "bb-cal 04 2006"
 tested "bb-cal"
 
-check "bb-cut"
+check "bb-cut" 0 "bb-echo 'emilija 20 2006' > /tmp/sample.txt && bb-cut -d ' ' -f 2 /tmp/sample.txt && bb-rm /tmp/sample.txt"
 tested "bb-cut"
 
-check "bb-cp"
+check "bb-cp" 0 "bb-echo 'miau miau miau' > /tmp/test1.txt && bb-cp /tmp/test1.txt /tmp/test2.txt && bb-rm /tmp/test1.txt /tmp/test2.txt"
 tested "bb-cp"
 
-check "bb-date"
+check "bb-date" 0 "bb-date -s 20:15"
 tested "bb-date"
 
-check "bb-echo"
+check "bb-echo" 0 "echo \"I love cats \" "
 tested "bb-echo"
 
-check "bb-find"
+check "bb-find" 0 "bb-find . -type f -name test.sh"
 tested "bb-find"
 
-check "bb-grep"
+check "bb-grep" 0 "printf 'hello\nworld\n' | bb-grep 'world'"
 tested "bb-grep"
 
-check "bb-httpd"
-tested "bb-httpd"
-
-check "bb-rmdir"
+check "bb-rmdir" 0 "bb-mkdir /tmp/gaf && bb-rmdir /tmp/gaf"
 tested "bb-rmdir"
 
-check "bb-touch"
+check "bb-touch" 0 "bb-touch /tmp/miau.txt && bb-rm /tmp/miau.txt"
 tested "bb-touch"
 
-check "bb-sed"
+check "bb-sed" 0 "printf 'hello world\n' | bb-sed 's/world/BusyBox/'"
 tested "bb-sed"
 
-check "bb-mkdir"
+check "bb-mkdir" 0 "bb-mkdir /tmp/gaf && bb-rmdir /tmp/gaf"
 tested "bb-mkdir"
 
-check "bb-mv"
+check "bb-mv" 0 "bb-echo \"miau miau miau\" > /tmp/test3.txt | bb-mv /tmp/test3.txt /tmp/test4.txt"
 tested "bb-mv"
 
-check "bb-ping"
-tested "bb-ping"
-
-check "bb-printf"
+check "bb-printf" 0 "bb-printf 'hello world\nmiau busybox\n'"
 tested "bb-printf"
 
-check "bb-pwd"
+check "bb-pwd" 0 "bb-pwd"
 tested "bb-pwd"
 
-check "bb-rm"
+check "bb-rm" 0 "bb-touch /tmp/test{1..5}.txt && bb-rm /tmp/test*.txt"
 tested "bb-rm"
 
-check "bb-tail"
+check "bb-tail" 0 "printf '1\n2\n3\n' | bb-tail -n 1"
 tested "bb-tail"
 
-check "bb-head"
+check "bb-head" 0 "printf '1\n2\n3\n' | bb-head -n 1"
 tested "bb-head"
 
-check "bb-tar"
+check "bb-tar" 0 "mkdir -p /tmp/bb_tar_test && touch /tmp/bb_tar_test/file && bb-tar -cf /tmp/test.tar /tmp/bb_tar_test && rm -rf /tmp/bb_tar_test /tmp/test.tar"
 tested "bb-tar"
 
-check "bb-wc"
+check "bb-wc" 0 "printf 'hello\n' | bb-wc"
 tested "bb-wc"
 
-check "bb-which"
+check "bb-which" 0 "bb-which bb-ls"
 tested "bb-which"
 
-check "bb-who"
+check "bb-who" 0 "bb-who"
 tested "bb-who"
 
-check "bb-whoami"
+check "bb-whoami" 0 "bb-whoami"
 tested "bb-whoami"
 
-check "bb-man"
+check "bb-man" 0 "bb-man --help"
 tested "bb-man"
 
-check "bb-chmod"
+check "bb-chmod" 0 "bb-touch /tmp/foo.sh && bb-chmod a+x /tmp/foo.sh && bb-rm /tmp/foo.sh"
 tested "bb-chmod"
 
-check "bb-dirname"
+check "bb-dirname" 0 "bb-dirname /tmp/example/file.txt"
 tested "bb-dirname"
 
-check "bb-du"
-tested "bb-du"
-
-check "bb-df"
+check "bb-df" 0 "bb-df /"
 tested "bb-df"
 
-check "bb-env"
+check "bb-env" 0 "bb-env"
 tested "bb-env"
 
-check "bb-expr"
+check "bb-expr" 0 "bb-expr 1 + 1"
 tested "bb-expr"
 
-check "bb-sleep"
+check "bb-sleep" 0 "bb-sleep 1"
 tested "bb-sleep"
 
-check "bb-sort"
+check "bb-sort" 0 "printf '1\n5\n8\n2\n6\n' > /tmp/numbers.txt && bb-sort -n /tmp/numbers.txt && bb-rm /tmp/numbers.txt"
 tested "bb-sort"
 
-check "bb-uniq"
+check "bb-uniq" 0 "printf 'apple\napple\nbanana\nbanana\norange\n' | bb-uniq"
 tested "bb-uniq"
 
 echo "=== Other BusyBox Commands: --help only ==="
@@ -198,7 +195,7 @@ for cmd in /bin/bb-*; do
 done
 
 echo "------------------------"
-echo "PASSED TEST CASES: $PASS"
+echo "PASSED TEST CASES: $FUNCTIONAL_PASS"
 echo "FAILED COMMANDS: $FAIL"
 echo "SKIPPED WITH --help: $SKIP"
 echo "------------------------"
