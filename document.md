@@ -171,13 +171,9 @@ After I received answers to my questions, it became clear that using `timeout 2`
 
 BusyBox contains 402 commands in total, which is a large number. The first step was to separate dangerous commands from safe ones. Instead of checking every single command one by one and trying to understand which commands were safe and which were not, I decided to select around 50 commands and create proper functional tests for them. All remaining commands would only be checked using `--help`.
 
-At first, I wrote the script using a large `case` structure. However, after I started writing the test cases, the code became repetitive and required a lot of extra lines. Because of that, I decided to rewrite a large part of the script and create reusable helper functions such as `check`, `tested`, and `was_tested`. This made the script cleaner, easier to read and easier to expand later.
+At first, I wrote the script using a large `case` structure. However, after I started writing the test cases, the code became repetitive and required a lot of extra lines. Because of that, I decided to rewrite a large part of the script and create reusable helper functions such as `check`, `tested`, and `was_tested`. This made the script cleaner, easier to read and easier to expand later. After selecting the commands, I started writing the test cases. Overall, creating the tests was interesting, but it also took a lot of time to create valid and reliable test cases. Some tests are simple, but in many situations there was not really a better way to test the command. For example, commands like `bb-whoami` are difficult to test in a more advanced way without making the test unnecessarily complicated.
 
-After selecting the commands, I started writing the test cases. Overall, creating the tests was interesting, but it also took a lot of time to create valid and reliable test cases. Some tests are simple, but in many situations there was not really a better way to test the command. For example, commands like `bb-whoami` are difficult to test in a more advanced way without making the test unnecessarily complicated.
-
-At some point, I noticed that several commands in my functional test list were difficult to test reliably in my environment. For example, the `bb-du` test case did not behave consistently, so I removed its functional test and moved it to the `--help` section instead.
-
-Some commands were also difficult to test because I did not fully remember how to use them correctly. Because of that, some tests failed not because the commands were broken, but because I used them incorrectly. By reading `--help` and manual page, I was able to create working test cases. This task also helped me practice using manuals and `--help` pages, which was useful.
+At some point, I noticed that several commands in my functional test list were difficult to test reliably in my environment. For example, the `bb-du` test case did not behave consistently, so I removed its functional test and moved it to the `--help` section instead. Some commands were also difficult to test because I did not fully remember how to use them correctly. Because of that, some tests failed not because the commands were broken, but because I used them incorrectly. By reading `--help` and manual page, I was able to create working test cases. This task also helped me practice using manuals and `--help` pages, which was useful.
 
 Another important thing I noticed was related to the shell options at the beginning of the script. At first, I used:
 
@@ -198,6 +194,40 @@ This allowed the script to continue executing all tests and show all failures at
   5. Using `set -e` in the script. With `set -e`, the script stopped after the first failed test, which prevented me from seeing all test results. I solved this by removing the `-e` option so the script could continue running all tests.
   6. Learning unfamiliar commands. Some BusyBox commands were difficult to test because I was not fully familiar with their syntax or behavior. I solved this by reading the manual pages and using `--help` to better understand how the commands work. 
 
+### DAY 7:
+
+The last task was related to `httpd`. The goal was to create a fully working HTTP server using BusyBox `httpd`, which would be managed by `systemd`, automatically start after every reboot, restart if the service crashes, and be easily deployed on a clean virtual machine using my scripts.
+
+First of all, I asked the teaching assistant, and it became clear that this task should be implemented inside `deploy.sh`. According to the task requirements, the first step was to create the directory where the website files would be stored. After that, I had to create an `index.html` file containing the string:
+
+`I am alive <MIF-username>`
+
+To create this file, I used `tee` instead of a normal `echo >` file redirect. The reason is that redirects (`>`) are executed with normal user permissions and not with sudo, which can cause permission errors when writing into system directories such as `/var/www/html`. After creating `index.html`, I also had to create the BusyBox httpd configuration file inside `/etc/bb-httpd.conf`. At first, I tried using:
+
+`/:index.html`
+
+inside the config file, but this caused the server to return `401 Unauthorized`. After checking the behavior of BusyBox `httpd`, I realized that this line was interpreted as an authentication rule instead of a normal route configuration. Because of that, I changed the configuration file to an empty file, while still keeping it in /etc as required by the task.
+
+The next step was creating the systemd service file inside:
+
+`/etc/systemd/system/bb-httpd.service`
+
+Inside the service file, I configured BusyBox `httpd` to:
+
+  1. run on port `80`;
+  2. use `/var/www/html` as the web root directory;
+  3. use /`etc/bb-httpd.conf` as the config file;
+  4. automatically restart if the service crashes.
+
+I also added: `Restart=always` so that the service would restart automatically if it gets killed or stops working. After creating the service file, I added several systemctl commands into `deploy.sh`: `daemon-reload`, `enable`, `restart`. These commands reload the new service configuration, enable automatic startup after reboot, and start the service immediately. To test the server, I created `httptest.sh`, which uses BusyBox `wget` to request the webpage from `http://localhost` and print the result to the terminal. When running the script, the output correctly showed:
+
+`I am alive empo1010`
+
+I also tested whether the service restarts automatically after being killed using:
+
+`sudo systemctl kill bb-httpd`
+
+After a few seconds, the service started again automatically, which confirmed that `Restart=always` was working correctly.
 </p>
 
 
