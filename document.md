@@ -206,7 +206,7 @@ To create this file, I used `tee` instead of a normal `echo >` file redirect. Th
 
 `/:index.html`
 
-inside the config file, but this caused the server to return `401 Unauthorized`. After checking the behavior of BusyBox `httpd`, I realized that this line was interpreted as an authentication rule instead of a normal route configuration. Because of that, I changed the configuration file to an empty file, while still keeping it in /etc as required by the task.
+inside the config file, but after starting the server and opening `http://localhost`, the server returned `401 Unauthorized` instead of the webpage. After testing and checking how BusyBox httpd works, I understood that this configuration was causing problems. Because of that, I decided to keep the config file empty, while still creating it inside `/etc` as required by the task.
 
 The next step was creating the systemd service file inside:
 
@@ -228,6 +228,12 @@ I also tested whether the service restarts automatically after being killed usin
 `sudo systemctl kill bb-httpd`
 
 After a few seconds, the service started again automatically, which confirmed that `Restart=always` was working correctly.
+
+**Challenges:**
+  1. Understanding how `systemd` services work. At first, I did not fully understand how `systemd` services are created and managed. I solved this by reading examples, checking how existing services work, and testing the commands step by step.
+  2. Problems with permissions. Writing files into `/etc` and `/var/www/html` caused permission problems. I solved this by using `sudo tee` instead of normal redirects with `>`.
+  3. Incorrect BusyBox httpd configuration. My first config file returned `401 Unauthorized` instead of the webpage. After testing and reading documentation, I understood that the configuration line was interpreted differently than I expected. I solved this by using an empty config file.
+  4. Understanding deployment logic. At first, I created some files manually, but later I realized that everything will be recreated automatically on a clean VM. Because of that, I moved all required steps into `deploy.sh`.
 </p>
 
 
