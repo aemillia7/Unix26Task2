@@ -18,7 +18,7 @@ check() {
 	local expected="$2"
 	local command="$3"
 	local actual
-
+	#paleidzia komanda kuri yra saugoma kintamajame command, eval ivykdo ja
 	eval "$command" >/dev/null 2>&1
 	actual=$?
 
@@ -36,10 +36,12 @@ check() {
 	fi
 }
 
+# funkcija kuri issaugo kad komanda jau buvo testuota, kad nebutu 2 kart testuojama
 tested() {
 	TESTED="$TESTED $1"
 }
-
+# patikrina, ar komanda jau buvo testuota
+# jeigu komanda jau turejo test case, tai loope ji nebus testuojama dar karta
 was_tested() {
 	[[ " $TESTED " == *" $1 "* ]]
 }
@@ -184,6 +186,7 @@ tested "bb-uniq"
 echo "=== Other BusyBox Commands: --help only ==="
 
 for cmd in /bin/bb-*; do
+	# paima tik f pav. is pilno kelio, pvz. cmd="/bin/bb-ls" tada name="bb-ls"
 	name="$(basename "$cmd")"
 
 	if was_tested "$name"; then
