@@ -81,6 +81,9 @@ grep '^CONFIG_STATIC=y' .config
 
 #kompiliuoja bb
 make -j"$(nproc)"
+
+systemctl stop bb-httpd 2>/dev/null || true
+
 cp busybox "$ROOT/busybox"
 chmod +x "$ROOT/busybox"
 "$ROOT/busybox" --help | head
