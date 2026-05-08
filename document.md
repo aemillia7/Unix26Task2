@@ -5,12 +5,12 @@
 
 
 <div align="center">
- | <a href="#large_blue_diamond-about">About</a> |
-  <a href="#large_blue_diamond-task">Task and Requirements</a> |
-  <a href="#large_blue_diamond-implementation">Implementation Details</a> |
-  <a href="#large_blue_diamond-diary">Work Diary and Challenges</a> |
-  <a href="#large_blue_diamond-conclusion">Conclusion and Lessons Learned</a> |
-  <a href="#large_blue_diamond-setup">Setup & Run</a> |
+ | <a href="#about">About</a> |
+  <a href="#task">Task and Requirements</a> |
+  <a href="#implementation">Implementation Details</a> |
+  <a href="#diary">Work Diary and Challenges</a> |
+  <a href="#conclusion">Conclusion and Lessons Learned</a> |
+  <a href="#setup">Setup & Run</a> |
 </div>
 
 <p align="center">
@@ -40,7 +40,7 @@ This task focuses on learning how to compile, install, configure and test softwa
 
 In this project, BusyBox was compiled as a statically linked binary for the x86_64 architecture and deployed using Bash scripts. The task also included creating automatic deployment and testing scripts, configuring a systemd service and working with the BusyBox httpd web server. Another important part of the task was creating an HTTP service that starts automatically after reboot, restarts if it crashes and serves a simple HTML page.
 
-The rest of this document is structured as follows. The first section, _Task and Requirements_, describes the assignment requirements and explains what needed to be implemented. The second section, _Implementation Details_, explains what each script does and why certain solutions were chosen. The third section, _Work Diary and Challenges_, describes the work completed during different days, including problems, debugging steps and solutions. The next section explains what I learned during this task together with some final conclusions. Finally, the _Setup and Run_ section explains how to correctly run the scripts on a clean virtual machine.
+The rest of this document is structured as follows. The first section, _Task and Requirements_, describes the assignment requirements and explains what needed to be implemented. The second section, _Implementation Details_, explains what each script does and why certain solutions were chosen. The third section, _Work Diary and Challenges_, describes the work completed during different days, including problems, debugging steps and solutions. The next section explains what I learned during this task together with some final conclusions. Finally, the _Setup & Run_ section explains how to correctly run the scripts on a clean virtual machine.
 </p>
 
 ---
@@ -287,7 +287,28 @@ miau miau miau
 ---
 <p align="justify">
 
-miau miau miau
+Those are the commands that are needed in order to successfully run the scripts. Below, you can find an explanation of each command and why it is used.
+
+```
+sudo apt update
+sudo apt install -y git
+git clone https://git.mif.vu.lt/empo1010/Unix26Task2.git
+cd Unix26Task2
+cd ~
+sudo mv Unix26Task2 /opt/task2
+cd /opt/task2
+sudo ./install_service.sh
+```
+1. **Create a New Virtual Machine**. First, create a new virtual machine using the template: `IT Unix 26 debian-13`. After the virtual machine is created, log into the system and open the terminal.
+
+2. **Install Git**. The default virtual machine does not have Git installed, but Git is required in order to clone the project repository. Install it using these commands: `sudo apt update`, `sudo apt install -y git`.
+
+3. **Clone the Repository**. Clone the project repository from MIF Git: `git clone https://git.mif.vu.lt/empo1010/Unix26Task2.git`. During this step, the terminal will ask for your Git username and password. After cloning the repository, enter the project directory: `cd Unix26Task2`.
+
+4. **Move the Project to `/opt/task2`**. According to the task requirements, all scripts and files must be located inside `/opt/task2`. Because of that, the cloned repository directory is moved to the required location: `cd ~`, `sudo mv Unix26Task2 /opt/task2`. After moving the project, enter the new directory: `cd /opt/task2`.
+
+5. **Run the Installation Script**. Finally, run the installation script: `sudo ./install_service.sh`. This script compiles BusyBox, deploys all BusyBox commands, creates the systemd service, configures the HTTP server and prepares the environment for testing.
+
 
 </p>
 
