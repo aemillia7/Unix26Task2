@@ -1,6 +1,14 @@
 #!/usr/bin/bash
 set -euo pipefail
 
+# prasom kad skriptas butu paleistas su sudo teisemis, EUID tai effective user id
+if [[ "$EUID" -ne 0 ]]; then
+	echo "ERROR: This script must be run with sudo/root priveleges"
+	echo "Run it as: sudo ./compile.sh"
+	exit 1
+fi
+
+
 ROOT="/opt/task2"
 SRC="$ROOT/src"
 
@@ -10,7 +18,8 @@ BB_DIR="${SRC}/busybox-${BB_VERSION}"
 BB_URL="https://busybox.net/downloads/${BB_ARCHIVE}"
 
 
-# Check and install required build tools if missing
+# patikriniam ar yra reikalingi tools jei ne tai idiegiam
+# -v rodo komandos kelia pvz /usr/bin/python3
 for cmd in wget tar python3 make gcc bzip2; do
         if ! command -v "$cmd" >/dev/null 2>&1; then
                 echo "Required tool '$cmd' is missing."
@@ -75,3 +84,5 @@ make -j"$(nproc)"
 cp busybox "$ROOT/busybox"
 chmod +x "$ROOT/busybox"
 "$ROOT/busybox" --help | head
+
+echo "=== COMPILATION IS FINISHED ==="
