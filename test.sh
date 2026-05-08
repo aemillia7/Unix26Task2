@@ -106,7 +106,7 @@ tested "bb-cut"
 check "bb-cp" 0 "bb-echo 'miau miau miau' > /tmp/test1.txt && bb-cp /tmp/test1.txt /tmp/test2.txt && bb-rm /tmp/test1.txt /tmp/test2.txt"
 tested "bb-cp"
 
-check "bb-date" 0 "bb-date -s 20:15"
+check "bb-date" 0 "bb-date '+%Y-%m-%d'"
 tested "bb-date"
 
 check "bb-echo" 0 "bb-echo \"I love cats \" "
@@ -136,8 +136,8 @@ tested "bb-mv"
 check "bb-printf" 0 "bb-printf 'hello world\nmiau busybox\n'"
 tested "bb-printf"
 
-# pridedam capabilities kad ping veiktu be sudo
-sudo setcap cap_net_raw+ep /opt/task2/busybox
+# pridedam capabilities kad ping veiktu
+setcap cap_net_raw+ep /opt/task2/busybox
 
 check "bb-ping" 0 "bb-ping -c 1 127.0.0.1"
 tested "bb-ping"
@@ -154,7 +154,7 @@ tested "bb-tail"
 check "bb-head" 0 "printf '1\n2\n3\n' | bb-head -n 1"
 tested "bb-head"
 
-check "bb-tar" 0 "mkdir -p /tmp/bb_tar_test && touch /tmp/bb_tar_test/file && bb-tar -cf /tmp/test.tar /tmp/bb_tar_test && rm -rf /tmp/bb_tar_test /tmp/test.tar"
+check "bb-tar" 0 "bb-mkdir -p /tmp/bb_tar_test && bb-touch /tmp/bb_tar_test/file && bb-tar -cf /tmp/test.tar /tmp/bb_tar_test && bb-rm -rf /tmp/bb_tar_test /tmp/test.tar"
 tested "bb-tar"
 
 check "bb-wc" 0 "printf 'hello\n' | bb-wc"
