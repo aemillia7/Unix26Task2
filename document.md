@@ -35,8 +35,11 @@
 ---
 <p align="justify">
 
-miau miau miau
+This task focuses on learning how to compile, install, configure and test software manually in a Linux environment using Bash scripts and BusyBox tools. The main goal of this assignment is to understand how software can be built from source code without using package managers and how different tasks can be automated inside a Debian virtual machine.
 
+In this project, BusyBox was compiled as a statically linked binary for the x86_64 architecture and deployed using Bash scripts. The task also included creating automatic deployment and testing scripts, configuring a systemd service and working with the BusyBox httpd web server. Another important part of the task was creating an HTTP service that starts automatically after reboot, restarts if it crashes and serves a simple HTML page.
+
+The rest of this document is structured as follows. The first section, _Task and Requirements_, describes the assignment requirements and explains what needed to be implemented. The second section, _Implementation Details_, explains what each script does and why certain solutions were chosen. The third section, _Work Diary and Challenges_, describes the work completed during different days, including problems, debugging steps and solutions. The next section explains what I learned during this task together with some final conclusions. Finally, the _Setup and Run_ section explains how to correctly run the scripts on a clean virtual machine.
 </p>
 
 ---
@@ -52,7 +55,7 @@ miau miau miau
     2. Write a script _/opt/task2/deploy.sh_ that deploys all BusyBox call commands to /bin/bb-<command>. For example, _ls_ from BusyBox is linked to _/bin/bb-ls_. (Can be shell scripts).
     3. Write a script _/opt/task2/test.sh_ that tests all BusyBox linked binaries with case examples. Additionally, list all commands and their exit codes after executing them.
 3. Your task is to use BusyBox correctly.
-    1. Write a systemd service named _bb-httpd_ that uses httpd daemon from BusyBox to handle HTTP requests on port 80. It should serve _/var/www/html/index.html_ with a string _"I am alive <MIF-username>"_. The config file of _httpd_ should be in _/etc/bb-httpd.conf._
+    1. Write a systemd service named _bb-httpd_ that uses httpd daemon from BusyBox to handle HTTP requests on port 80. It should serve _/var/www/html/index.html_ with a string _"I am alive \<MIF-username\>"_. The config file of _httpd_ should be in _/etc/bb-httpd.conf._
     2. The systemd service file should be in the standard systemd directory. Service must be enabled - start automatically after each reboot. It should also restart the service if it's killed or stopped.
     3. Write a script _/opt/task2/httptest.sh_ to print to the terminal HTTP served content.
 4. Document your actions/challenges in a .md (markdown syntax - same as used on mif git) file in the git repository, which would be shared with course professors.
