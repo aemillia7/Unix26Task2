@@ -27,7 +27,7 @@
 
   <img src="https://img.shields.io/badge/Service-systemd-blueviolet" />
 
-  <img src="https://img.shields.io/badge/Status-Academic_Project-darkgreen" />
+  <img src="https://img.shields.io/badge/Status-Assigment-darkgreen" />
 
 </p>
 
@@ -314,6 +314,4 @@ sudo ./install_service.sh
 
 ---
 
-### Declaration of AI:
-
-All the sentences and words written in this file are my own. AI was only used to check spelling and correct grammar mistakes for better understanding, and to slightly improve clarity where needed.
+_NOTE: I do not know why, but when clicking on the contents section, it does not redirect to the selected section. However, while writing the document, it worked correctly in preview mode. Sorry for that!_ 
