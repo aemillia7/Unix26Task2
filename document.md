@@ -61,6 +61,8 @@ The rest of this document is structured as follows. The first section, _Task and
 4. Document your actions/challenges in a .md (markdown syntax - same as used on mif git) file in the git repository, which would be shared with course professors.
 5. Share the Result for validation is of GIT repo with script, _document.md_ VM with and git repo with an installation script.
 
+---
+
 </p>
 
 <a id="implementation"></a>
@@ -75,6 +77,9 @@ miau miau miau
 Exit Code	Meaning
 0	Success: The command or script executed without errors.
 1	General error: A generic error occurred during execution.
+
+---
+
 </p>
 
 <a id="diary"></a>
@@ -238,7 +243,6 @@ After a few seconds, the service started again automatically, which confirmed th
   2. Problems with permissions. Writing files into `/etc` and `/var/www/html` caused permission problems. I solved this by using `sudo tee` instead of normal redirects with `>`.
   3. Incorrect BusyBox httpd configuration. My first config file returned `401 Unauthorized` instead of the webpage. After testing and reading documentation, I understood that the configuration line was interpreted differently than I expected. I solved this by using an empty config file.
   4. Understanding deployment logic. At first, I created some files manually, but later I realized that everything will be recreated automatically on a clean VM. Because of that, I moved all required steps into `deploy.sh`.
-</p>
 
 ### DAY 8:
 
@@ -262,6 +266,10 @@ After that, I created a new virtual machine and tried to run everything there. B
 
 P.S. _Fun fact:_ I honestly do not know why this always happens to me, but on the last submission day new bugs suddenly appear even though everything worked before. Like a real _law of bad luck_. 
 
+---
+
+</p>
+
 ## :large_blue_diamond: Conclusions and Lessons Learned
 ---
 <p align="justify">
@@ -277,6 +285,8 @@ miau miau miau
 miau miau miau
 
 </p>
+
+---
 
 ### Declaration of AI:
 
