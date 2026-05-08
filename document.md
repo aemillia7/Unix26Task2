@@ -237,8 +237,27 @@ After a few seconds, the service started again automatically, which confirmed th
   4. Understanding deployment logic. At first, I created some files manually, but later I realized that everything will be recreated automatically on a clean VM. Because of that, I moved all required steps into `deploy.sh`.
 </p>
 
+### DAY 8:
 
+Today is the last day to submit the assignment, so since the task is basically finished, I decided to spend this day testing and debugging everything. First of all, I wanted to add some comments in several places to make the script pipeline easier to understand. Later, I still need to finish writing `document.md` and run all scripts on a freshly created virtual machine.
 
+Since our scripts will be executed with `sudo` privileges, I added a check in `compile.sh` (mostly as a nice-to-have thing and because it looks cleaner). I will not add this check to every script, because some of them can work correctly even without sudo permissions. While making this check, I learned that every user has their own ID and that the root user ID is `0`. Later, I also added the same check to `deploy.sh` to make sure it is executed with `sudo` privileges as well. Finally, after all these fixes, I created `install_service.sh`, basically one orchestrator script that runs all the other scripts and does the whole setup automatically. Up to this point there were not many bugs, so everything was fixed pretty quickly, but the most important part was testing everything on a completely fresh virtual machine.
+
+When I ran `install_service.sh`, the script failed during compilation with the message:
+
+`cp: cannot create regular file '/opt/task2/busybox': Text file busy`
+
+This happened because the `bb-httpd` service was already running and using the `/opt/task2/busybox` binary. Since the binary was currently in use, it could not be overwritten during the `cp` operation. To fix this issue, I added the following line to `compile.sh` before copying the new BusyBox binary:
+
+`systemctl stop bb-httpd 2>/dev/null || true`
+
+This stops the `bb-httpd` service if it is running, preventing the binary from being locked and allowing the compilation script to replace it successfully.
+
+Also, after pushing my changes to GitLab, I noticed that one of the commits was showing _in 5 hours_ instead of the normal timestamp. At first, I thought something was wrong with GitLab or with my repository history, so I got a bit scared. Later, I realized that probably the issue happened because while testing `test.sh`, I used the command `bb-date -s 20:15`. Since BusyBox `date -s` changes the actual system time, it modified the VM clock, and Git used that incorrect future time for the commit timestamp, but this issue was fixed pretty quickly (good that I noticed this).
+
+After that, I created a new virtual machine and tried to run everything there. But then I remembered that Git was not installed yet, so I installed it, cloned the repository, and added a few more commands. At first, `install_service.sh` failed very quickly because there was no `/opt/task2` directory, only `Unix26Task2`, so I renamed it and ran the script again. After that, everything finally worked successfully. Now the only thing left is to finish `document.md` and the whole assignment will be completed.
+
+P.S. _Fun fact:_ I honestly do not know why this always happens to me, but on the last submission day new bugs suddenly appear even though everything worked before. Like a real _law of bad luck_. 
 
 ### Declaration of AI:
 
