@@ -332,4 +332,21 @@ sudo ./install_service.sh
 
 ---
 
+## End of Documentation
+---
+
+If you are reading this, it means either:
+- the documentation was actually interesting,
+- or you were forced to read everything (which is more likely).
+
+Anyway, thank you for surviving this documentation. Here is a cat as a reward.
+
+<p align="center">
+  <img src="images/CuteCat.jpg" />
+</p>
+<p align="center">
+
+
+---
+
 _NOTE: I do not know why, but when clicking on the contents section, it does not redirect to the selected section. However, while writing the document, it worked correctly in preview mode. Sorry for that!_ 
