@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 set -euo pipefail
 
+
 # prasom kad skriptas butu paleistas su sudo teisemis, EUID tai effective user id
 if [[ "$EUID" -ne 0 ]]; then
 	echo "ERROR: This script must be run with sudo/root priveleges"

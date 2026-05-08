@@ -23,3 +23,4 @@ echo "=== STEP 4: Test bb-httpd response ==="
 
 echo
 echo "=== INSTALLATION AND TESTING FINISHED SUCCESSFULLY ==="
+

@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 set -uo pipefail
 
+
 if [[ "$EUID" -ne 0 ]]; then
 	echo "ERROR: This script must be run with sudo/root privileges"
 	echo "Run it as: sudo ./test.sh"
