@@ -1,6 +1,13 @@
 #!/usr/bin/bash
 set -uo pipefail
 
+if [[ "$EUID" -ne 0 ]]; then
+	echo "ERROR: This script must be run with sudo/root privileges"
+	echo "Run it as: sudo ./test.sh"
+	exit 1
+fi
+
+
 RED="\033[0;31m"
 GREEN="\033[0;32m"
 NC="\033[0m"   # i balta spalva grizta
@@ -102,7 +109,7 @@ tested "bb-cp"
 check "bb-date" 0 "bb-date -s 20:15"
 tested "bb-date"
 
-check "bb-echo" 0 "echo \"I love cats \" "
+check "bb-echo" 0 "bb-echo \"I love cats \" "
 tested "bb-echo"
 
 check "bb-find" 0 "bb-find . -type f -name test.sh"
@@ -123,7 +130,7 @@ tested "bb-sed"
 check "bb-mkdir" 0 "bb-mkdir /tmp/gaf && bb-rmdir /tmp/gaf"
 tested "bb-mkdir"
 
-check "bb-mv" 0 "bb-echo \"miau miau miau\" > /tmp/test3.txt | bb-mv /tmp/test3.txt /tmp/test4.txt"
+check "bb-mv" 0 "bb-echo 'miau miau miau' > /tmp/test3.txt && bb-mv /tmp/test3.txt /tmp/test4.txt && bb-rm /tmp/test4.txt"
 tested "bb-mv"
 
 check "bb-printf" 0 "bb-printf 'hello world\nmiau busybox\n'"
