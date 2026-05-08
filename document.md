@@ -13,7 +13,7 @@
   <a href="#setup">Setup & Run</a> |
 </div>
 
-<p align="center">
+<div align="center">
 
   <img src="https://img.shields.io/badge/Language-Bash-blue" />
 
@@ -29,7 +29,7 @@
 
   <img src="https://img.shields.io/badge/Status-Assigment-darkgreen" />
 
-</p>
+</div>
 
 <a id="about"></a>
 ## :large_blue_diamond: About
