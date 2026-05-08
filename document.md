@@ -6,11 +6,11 @@
 
 <div align="center">
  | <a href="#large_blue_diamond-about">About</a> |
-  <a href="#large_blue_diamond-task-and-requirements">Task and Requirements</a> |
-  <a href="#large_blue_diamond-implementation-details">Implementation Details</a> |
-  <a href="#large_blue_diamond-work-diary">Work Diary and Challenges</a> |
+  <a href="#large_blue_diamond-task">Task and Requirements</a> |
+  <a href="#large_blue_diamond-implementation">Implementation Details</a> |
+  <a href="#large_blue_diamond-diary">Work Diary and Challenges</a> |
   <a href="#large_blue_diamond-conclusion">Conclusion and Lessons Learned</a> |
-  <a href="#large_blue_diamond-setup--run">Setup & Run</a> |
+  <a href="#large_blue_diamond-setup">Setup & Run</a> |
 </div>
 
 <p align="center">
@@ -31,6 +31,7 @@
 
 </p>
 
+<a id="about"></a>
 ## :large_blue_diamond: About
 ---
 <p align="justify">
@@ -270,14 +271,18 @@ P.S. _Fun fact:_ I honestly do not know why this always happens to me, but on th
 
 </p>
 
+<a id="conclusions"></a>
 ## :large_blue_diamond: Conclusions and Lessons Learned
 ---
 <p align="justify">
 
 miau miau miau
 
+---
+
 </p>
 
+<a id="setup"></a>
 ## :large_blue_diamond: Setup & Run
 ---
 <p align="justify">
