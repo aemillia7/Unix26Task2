@@ -259,6 +259,22 @@ After that, I created a new virtual machine and tried to run everything there. B
 
 P.S. _Fun fact:_ I honestly do not know why this always happens to me, but on the last submission day new bugs suddenly appear even though everything worked before. Like a real _law of bad luck_. 
 
+## :large_blue_diamond: Conclusions and Lessons Learned
+---
+<p align="justify">
+
+miau miau miau
+
+</p>
+
+## :large_blue_diamond: Setup & Run
+---
+<p align="justify">
+
+miau miau miau
+
+</p>
+
 ### Declaration of AI:
 
 All the sentences and words written in this file are my own. AI was only used to check spelling and correct grammar mistakes for better understanding, and to slightly improve clarity where needed.
