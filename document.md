@@ -332,7 +332,7 @@ sudo ./install_service.sh
 
 ---
 
-## End of Documentation
+## :large_blue_diamond: End of Documentation
 ---
 
 If you are reading this, it means either:
