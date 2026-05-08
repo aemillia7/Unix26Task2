@@ -31,24 +31,26 @@
 
 </div>
 
+---
+
 <a id="about"></a>
 ## :large_blue_diamond: About
 ---
-<p align="justify">
+<div align="justify">
 
 This task focuses on learning how to compile, install, configure and test software manually in a Linux environment using Bash scripts and BusyBox tools. The main goal of this assignment is to understand how software can be built from source code without using package managers and how different tasks can be automated inside a Debian virtual machine.
 
 In this project, BusyBox was compiled as a statically linked binary for the x86_64 architecture and deployed using Bash scripts. The task also included creating automatic deployment and testing scripts, configuring a systemd service and working with the BusyBox httpd web server. Another important part of the task was creating an HTTP service that starts automatically after reboot, restarts if it crashes and serves a simple HTML page.
 
 The rest of this document is structured as follows. The first section, _Task and Requirements_, describes the assignment requirements and explains what needed to be implemented. The second section, _Implementation Details_, explains what each script does and why certain solutions were chosen. The third section, _Work Diary and Challenges_, describes the work completed during different days, including problems, debugging steps and solutions. The next section explains what I learned during this task together with some final conclusions. Finally, the _Setup & Run_ section explains how to correctly run the scripts on a clean virtual machine.
-</p>
+</div>
 
 ---
 
 <a id="task"></a>
 ## :large_blue_diamond: Task and Requirements
 ---
-<p align="justify">
+<div align="justify">
 
 1. Use your virtual machine that is using the template **"IT Unix 26 debian-13"**
 2. Your task is to write an installation, compilation, and test scripts in **bash** for **BusyBox**. Learn to download source code, compile software on your machine and related libraries in _/opt/task2/src_.  It is also important to download, compile and install in _/opt/task2/src_ all components of BusyBox on your Debian virtual machine without using any package managers for the installations.
@@ -64,12 +66,12 @@ The rest of this document is structured as follows. The first section, _Task and
 
 ---
 
-</p>
+</div>
 
 <a id="implementation"></a>
 ## :large_blue_diamond: Implementation Details
 ---
-<p align="justify">
+<div align="justify">
 
 miau miau miau
 
@@ -81,20 +83,20 @@ Exit Code	Meaning
 
 ---
 
-</p>
+</div>
 
 <a id="diary"></a>
 ## :large_blue_diamond: Work Diary and Challenges
 ---
-<p align="justify">
+<div align="justify">
 
 ### DAY 1:
 
-Basically, it is easiest for me to start working when I plan what I need to do and organize everything so that the task is clear to me. That is why the first thing I did was to carefully read the task and understand what is required from me. First of all, I did some research about BusyBox - what it is, how it works, and what is the main idea of this task, what I am supposed to learn (some points, like what BusyBox is and how it works, will be explained in other sections, so I will not explain everything here). Next, I created all the required files where scripts and documentation will be written, and I defined a structure in which order the scripts should be written. I also explained to myself why this order makes sense:
+Basically, it is easiest for me to start working when I plan what I need to do and organize everything so that the task is clear to me. That is why the first thing I did was to carefully read the task and understand what is required from me. First of all, I did some research about BusyBox - what it is, how it works, and what is the main idea of this task, what I am supposed to learn. Next, I created all the required files where scripts and documentation will be written, and I defined a structure in which order the scripts should be written. I also explained to myself why this order makes sense:
 
-`compile.sh  ->  deploy.sh  ->  test.sh  ->  bb-httpd service  ->  httptest.sh  ->  document.md`
+`compile.sh  ->  deploy.sh  ->  test.sh  ->  httptest.sh  ->  document.md`
 
-But I will update document.md after each step, so the documentation is more complete, because if I write everything only at the end, a lot of information can be missed or not fully explained.
+But I will update _document.md_ after each step, so the documentation is more complete, because if I write everything only at the end, a lot of information can be missed or not fully explained.
 
 The first file I worked on was `compile.sh`. This file is used to compile a statically linked BusyBox (which means it works without additional libraries) for x86_64 architecture (which is a standard 64-bit Linux architecture). The next thing I did was to understand how BusyBox source code is downloaded. I went to the website https://busybox.net/downloads/ to see how the download structure looks like, specifically **busybox-[version].tar.bz2**. I also checked available versions and decided to use the latest one, which is **1.37.0** (_released 2025-09-26_).
 
@@ -120,7 +122,7 @@ While working on this task, I also had a few questions (which I later had clarif
 
 In short, after a few hours of work, I finally finished the first script. Honestly, I did everything in one commit – maybe I should have made several commits, but I forgot. I will try to commit more often for the next files.
 
-P.S. Now it is 4:30 in the morning, I am so cooked 😭, so see you in DAY 2.
+P.S. Now it is 4:30 in the morning, I am so cooked 😭.
 
 
 ### DAY 2:
@@ -155,7 +157,7 @@ It looked like only one simple loop would be needed, where I get the list of `bb
 
 The first issue was that the output of some commands was very long, so it was necessary to redirect the output of each command to `/dev/null` and only show the report in the terminal.
 
-The second challenge was that some commands (for example `bb-cat`, etc.) were waiting for input, and because of that the script seemed to freeze, because until one command is finished, the next ones cannot be executed. Because of this, a decision was made to add a `timeout` - if a command is not processed within 2 seconds, it exits with code `124`. Therefore, the loop had to be modified and the following part was added:
+The second challenge was that some commands (for example `bb-cat`, etc.) were waiting for input, and because of that the script seemed to freeze, because until one command is finished, the next ones cannot be executed. Because of this, a decision was made to add a `timeout 2` - if a command is not processed within 2 seconds, it exits with code `124`. Therefore, the loop had to be modified and the following part was added:
 
 `timeout 2 "$cmd" </dev/null >/dev/null 2>&1`
 
@@ -206,7 +208,7 @@ This allowed the script to continue executing all tests and show all failures at
 
 ### DAY 7:
 
-The last task was related to `httpd`. The goal was to create a fully working HTTP server using BusyBox `httpd`, which would be managed by `systemd`, automatically start after every reboot, restart if the service crashes, and be easily deployed on a clean virtual machine using my scripts.
+The last task was related to `httpd`. The goal was to create a fully working HTTP server using BusyBox `httpd`, which would be managed by `systemd`, automatically start after every reboot, restart if the service crashes and be easily deployed on a clean virtual machine using my scripts.
 
 First of all, I asked the teaching assistant, and it became clear that this task should be implemented inside `deploy.sh`. According to the task requirements, the first step was to create the directory where the website files would be stored. After that, I had to create an `index.html` file containing the string:
 
@@ -229,7 +231,7 @@ Inside the service file, I configured BusyBox `httpd` to:
   3. use /`etc/bb-httpd.conf` as the config file;
   4. automatically restart if the service crashes.
 
-I also added: `Restart=always` so that the service would restart automatically if it gets killed or stops working. After creating the service file, I added several systemctl commands into `deploy.sh`: `daemon-reload`, `enable`, `restart`. These commands reload the new service configuration, enable automatic startup after reboot, and start the service immediately. To test the server, I created `httptest.sh`, which uses BusyBox `wget` to request the webpage from `http://localhost` and print the result to the terminal. When running the script, the output correctly showed:
+I also added: `Restart=always` so that the service would restart automatically if it gets killed or stops working. After creating the service file, I added several systemctl commands into `deploy.sh`: `daemon-reload`, `enable`, `restart` (_update: that was an initial script, at the DAY 8, I a little bit modified the script, since some bugs occured_). These commands reload the new service configuration, enable automatic startup after reboot, and start the service immediately. To test the server, I created `httptest.sh`, which uses BusyBox `wget` to request the webpage from `http://localhost` and print the result to the terminal. When running the script, the output correctly showed:
 
 `I am alive empo1010`
 
@@ -249,7 +251,7 @@ After a few seconds, the service started again automatically, which confirmed th
 
 Today is the last day to submit the assignment, so since the task is basically finished, I decided to spend this day testing and debugging everything. First of all, I wanted to add some comments in several places to make the script pipeline easier to understand. Later, I still need to finish writing `document.md` and run all scripts on a freshly created virtual machine.
 
-Since our scripts will be executed with `sudo` privileges, I added a check in `compile.sh` (mostly as a nice-to-have thing and because it looks cleaner). I will not add this check to every script, because some of them can work correctly even without sudo permissions. While making this check, I learned that every user has their own ID and that the root user ID is `0`. Later, I also added the same check to `deploy.sh` to make sure it is executed with `sudo` privileges as well. Finally, after all these fixes, I created `install_service.sh`, basically one orchestrator script that runs all the other scripts and does the whole setup automatically. Up to this point there were not many bugs, so everything was fixed pretty quickly, but the most important part was testing everything on a completely fresh virtual machine.
+Since our scripts will be executed with `sudo` privileges, I added a check in `compile.sh` (mostly as a nice-to-have thing and because it looks cleaner). I will not add this check to every script, because some of them can work correctly even without sudo permissions. While making this check, I remembered that every user has their own ID and that the root user ID is `0`. Later, I also added the same check to `deploy.sh` to make sure it is executed with `sudo` privileges as well. Finally, after all these fixes, I created `install_service.sh`, basically one orchestrator script that runs all the other scripts and does the whole setup automatically. Up to this point there were not many bugs, so everything was fixed pretty quickly, but the most important part was testing everything on a completely fresh virtual machine.
 
 When I ran `install_service.sh`, the script failed during compilation with the message:
 
@@ -269,23 +271,36 @@ P.S. _Fun fact:_ I honestly do not know why this always happens to me, but on th
 
 ---
 
-</p>
+</div>
 
 <a id="conclusions"></a>
 ## :large_blue_diamond: Conclusions and Lessons Learned
 ---
-<p align="justify">
+<div align="justify">
 
-miau miau miau
+**Main things I learned during this task:**
+1. How to download source code manually and compile software without using package managers.
+2. Better understanding of Bash scripting, especially loops, variables, conditions and helper functions.
+3. The difference between safe and dangerous system commands and why some commands should not be tested directly.
+4. How to debug Bash scripts and check syntax errors using: `bash -n script.sh`
+5. Why redirects using `>` can fail with sudo and why `tee` is sometimes a better solution.
+6. How wrapper scripts work and how arguments are passed using `$@`.
+7. How BusyBox httpd works and how to configure a simple HTTP server.
+8. How to test software on a clean virtual machine and why testing on a fresh environment is very important.
+9. The importance of writing comments and documentation during development instead of only at the end.
+10. That debugging sometimes takes much more time than writing the initial code itself.
+
+**Overall conclusions:**
+Overall, this task helped me better understand how Linux/Unix systems work on a lower level and how much work is actually required to automate system setup and testing correctly. At the beginning, many parts of the assignment looked hard to me (I am just the type of person who usually cannot understand a task from the first time and needs to clarify many details before starting). During implementation, I also realized that debugging, testing and solving unexpected issues takes much more time than writing the initial code itself. Through this project, I improved my Bash scripting skills and learned more about BusyBox utilities, systemd services, permissions, software compilation and automated testing. I also understood how important it is to test scripts on a completely clean virtual machine, because many problems may stay hidden if the environment was already manually configured before. Another important lesson was learning how to read documentation, manual pages and `--help` outputs in order to understand unfamiliar commands and solve problems independently.
 
 ---
 
-</p>
+</div>
 
 <a id="setup"></a>
 ## :large_blue_diamond: Setup & Run
 ---
-<p align="justify">
+<div align="justify">
 
 Those are the commands that are needed in order to successfully run the scripts. Below, you can find an explanation of each command and why it is used.
 
@@ -310,7 +325,7 @@ sudo ./install_service.sh
 5. **Run the Installation Script**. Finally, run the installation script: `sudo ./install_service.sh`. This script compiles BusyBox, deploys all BusyBox commands, creates the systemd service, configures the HTTP server and prepares the environment for testing.
 
 
-</p>
+</div>
 
 ---
 
