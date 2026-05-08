@@ -70,9 +70,5 @@ EOF
 
 # systemd perskaito nauja service faila
 sudo systemctl daemon-reload
-# servisas startuos automatiskai po reboot
-sudo systemctl enable bb-httpd
-# servisas paleidziamas dabar
-sudo systemctl restart bb-httpd
-
-
+# servisas startuos automatiskai po reboot ir bus paleistas dabar
+sudo systemctl enable --now bb-httpd
