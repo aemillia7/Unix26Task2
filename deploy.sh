@@ -74,3 +74,5 @@ sudo systemctl daemon-reload
 sudo systemctl enable bb-httpd
 # servisas paleidziamas dabar
 sudo systemctl restart bb-httpd
+
+

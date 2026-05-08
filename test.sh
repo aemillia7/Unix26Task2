@@ -129,6 +129,7 @@ tested "bb-mv"
 check "bb-printf" 0 "bb-printf 'hello world\nmiau busybox\n'"
 tested "bb-printf"
 
+# pridedam capabilities kad ping veiktu be sudo
 sudo setcap cap_net_raw+ep /opt/task2/busybox
 
 check "bb-ping" 0 "bb-ping -c 1 127.0.0.1"
